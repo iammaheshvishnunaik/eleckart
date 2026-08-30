@@ -22,7 +22,7 @@
                     return (
                         <ProductCard
                             key={product._id}
-                            products={product}
+                            product={product}
                         />
                     );
                 })}

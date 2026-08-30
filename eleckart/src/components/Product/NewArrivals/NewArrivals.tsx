@@ -39,7 +39,7 @@ function NewArrivals() {
                     {newArrivals.map((eachProductData) => (
                         <ProductCard
                             key={eachProductData._id}
-                            products={eachProductData}
+                            product={eachProductData}
                         />
                     ))}
                 </div>
