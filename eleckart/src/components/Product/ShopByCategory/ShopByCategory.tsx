@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { categories } from '../../../data/categories'
 
 function ShopByCategory() {
@@ -8,10 +9,9 @@ function ShopByCategory() {
           <div className='flex gap-10'>
               {
                   categories.map((category) => (
-                      <div className='min-w-0' key={category.id}>
-                          <img src={category.image} alt={category.name} ></img>
-                          <h3 className='text-[18px] py-4'>{category.name}</h3>
-                      </div>
+                      <Link to={`/products?category=${category.slug}`} key={category.id} className='min-w-0'> 
+                      <img src={category.image} alt={category.name}></img> 
+                      <h3 className='text-[18px] py-4'>{category.name}</h3> </Link>
                   ))
               }
           </div>

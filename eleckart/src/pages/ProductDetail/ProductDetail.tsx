@@ -1,13 +1,45 @@
 import { useParams } from "react-router-dom";
-import { Products } from "../../data/products";
+import { useEffect, useState } from "react";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ProductGallery from "../../components/Product/ProductGallery/ProductGallery";
 import ProductInfo from "../../components/Product/ProductInfo/ProductInfo";
+import type { Product } from "../../types/product";
+import { getProducts } from "../../services/productService";
 
 const ProductDetail = () => {
     const { category, productId } = useParams();
+    const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    const product = Products.find((item) => item._id === productId);
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getProducts();
+                setProducts(data);
+            } catch (error) {
+                setError("Failed to load product");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    if (loading) {
+        return <div className="p-8 text-center">Loading product...</div>;
+    }
+
+    if (error) {
+        return (
+            <div className="p-8 text-center text-red-600">
+                {error}
+            </div>
+        );
+    }
+
+    const product = products.find((item) => item._id === productId);
     if (!product) {
         return <div>Product not found</div>;
     }

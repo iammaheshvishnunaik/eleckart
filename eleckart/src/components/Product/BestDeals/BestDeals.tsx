@@ -1,12 +1,29 @@
-import React from 'react'
-import { Products } from "../../../data/products"
-import ProductCard from "../ProductCard/ProductCard"
+import { useEffect, useState } from "react";
+import type { Product } from "../../../types/product";
+import { getProducts } from "../../../services/productService";
+import ProductCard from "../ProductCard/ProductCard";
 
 function BestDeals() {
-    const bestDeals = [...Products].sort(
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getProducts();
+                setProducts(data);
+            } catch (error) {
+                console.error("Failed to fetch products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    const bestDeals = [...products].sort(
         (productA, productB) =>
             productB.discount - productA.discount
     ).slice(0,4);
+    
     return (
     <section className="py-10">
             <div className="mx-auto max-w-7xl px-4">

@@ -1,3 +1,6 @@
+
+import { useNavigate } from "react-router-dom";
+
 interface OrderSummaryProps {
   subtotal: number;
   totalSavings: number;
@@ -9,6 +12,11 @@ const OrderSummary = ({
 }: OrderSummaryProps) => {
   const deliveryCharge = 0;
   const total = subtotal + deliveryCharge;
+
+const navigate = useNavigate();
+const handleCheckout = ()=>{
+  navigate("/checkout/address");
+}
 
   return (
     <div className="h-fit rounded-xl border border-gray-200 bg-white p-5 shadow-sm lg:sticky lg:top-24">
@@ -72,7 +80,7 @@ const OrderSummary = ({
       )}
 
       {/* Checkout */}
-      <button className="w-full rounded-lg bg-indigo-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 hover:shadow-md">
+      <button onClick={handleCheckout} className="w-full rounded-lg bg-indigo-600 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 hover:shadow-md">
         Proceed to Checkout
       </button>
     </div>

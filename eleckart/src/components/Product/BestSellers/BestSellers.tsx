@@ -1,9 +1,25 @@
-import React from 'react'
-import {Products} from "../../../data/products"
-import ProductCard from "../ProductCard/ProductCard"
+import { useEffect, useState } from "react";
+import type { Product } from "../../../types/product";
+import { getProducts } from "../../../services/productService";
+import ProductCard from "../ProductCard/ProductCard";
 
 function BestSellers() {
-    const bestSellers = [...Products].sort(
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getProducts();
+                setProducts(data);
+            } catch (error) {
+                console.error("Failed to fetch products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+    
+    const bestSellers = [...products].sort(
         (productA,productB) =>
             productB.salesCount - productA.salesCount
     ).slice(0,4);

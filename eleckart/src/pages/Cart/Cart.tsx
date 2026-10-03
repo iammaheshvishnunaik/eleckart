@@ -3,7 +3,7 @@ import type { RootState } from "../../store/store";
 import { Link } from "react-router-dom"
 
 import CartItem from "../../components/Cart/CartItem";
-import OrderSummary from "../../components/Cart/OrderSummary";
+import CartSummary from "../../components/Cart/CartSummary";
 
 const Cart = () => {
     const cartItems = useSelector(
@@ -78,7 +78,7 @@ const Cart = () => {
                         </div>
 
                         {/* Order Summary */}
-                        <OrderSummary
+                        <CartSummary
                             subtotal={subtotal}
                             totalSavings={totalSavings}
                         />

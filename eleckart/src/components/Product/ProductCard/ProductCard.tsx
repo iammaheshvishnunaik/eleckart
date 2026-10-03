@@ -19,7 +19,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     );
 
     return (
-        <Link to={`/product/${product.category}/${product.slug}/${product._id}`}>
+        <Link to={`/products/${product.category}/${product.slug}/${product._id}`}>
             <div className="group flex h-full flex-col rounded-lg border border-gray-200 bg-white p-3 transition-shadow hover:shadow-lg">
                 {/* Product Image */}
                 <div className="relative flex h-52 items-center justify-center overflow-hidden rounded-md bg-gray-50">

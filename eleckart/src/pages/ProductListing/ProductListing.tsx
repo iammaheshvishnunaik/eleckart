@@ -8,15 +8,35 @@ import mobileHeroBanner1 from "/images/banners/all_products/mob_hero_banner_1.pn
 import mobileHeroBanner2 from "/images/banners/all_products/mob_hero_banner_2.png";
 
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import ListingHeader from "../../components/Product/ListingHeader/ListingHeader";
 import FilterSidebar from "../../components/Product/FilterSidebar/FilterSidebar";
 import ProductGrid from "../../components/Product/ProductGrid/ProductGrid";
 
-import { Products } from "../../data/products";
+import type { Product } from "../../types/product";
+import { getProducts } from "../../services/productService";
 
 function ProductListing() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        setError("Failed to load products");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   /* Hero banner slides */
   const heroSlides: HeroSlide[] = [
     {
@@ -73,19 +93,30 @@ function ProductListing() {
     useState(false);
 
   /* Available price range */
-  const minProductPrice = Math.min(
-    ...Products.map((product) => product.price)
-  );
+  const minProductPrice =
+    products.length > 0
+      ? Math.min(...products.map((product) => product.price))
+      : 0;
 
-  const maxProductPrice = Math.max(
-    ...Products.map((product) => product.price)
-  );
+  const maxProductPrice =
+    products.length > 0
+      ? Math.max(...products.map((product) => product.price))
+      : 0;
 
   /* Selected price range */
   const [priceRange, setPriceRange] = useState({
     min: minProductPrice,
     max: maxProductPrice,
   });
+
+  useEffect(() => {
+    if (products.length > 0) {
+      setPriceRange({
+        min: minProductPrice,
+        max: maxProductPrice,
+      });
+    }
+  }, [products, minProductPrice, maxProductPrice]);
 
   /* Category filter */
   const handleCategoryChange = (category: string) => {
@@ -133,7 +164,7 @@ function ProductListing() {
   };
 
   /* Filter products */
-  const filteredProducts = Products.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     /* URL category filter */
     if (
       category &&
@@ -226,6 +257,27 @@ function ProductListing() {
         sortBy={sortBy}
         onSortChange={setSortBy}
       />
+
+      <div>
+        {loading && (
+          <div className="p-8 text-center">
+            Loading products...
+          </div>
+        )}
+
+        {error && (
+          <div className="p-8 text-center text-red-600">
+            {error}
+          </div>
+        )}
+
+        {!loading && !error && (
+          <>
+            {/* Your existing Hero Banner, Breadcrumb, ListingHeader,
+            filters and ProductGrid */}
+          </>
+        )}
+      </div>
 
       <div className="mx-auto flex max-w-7xl gap-6 px-4 py-4 sm:px-6 lg:px-8">
         {/* Left - Filters */}

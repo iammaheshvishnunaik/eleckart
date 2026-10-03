@@ -25,33 +25,6 @@ const Footer = () => {
                             Your trusted destination for the latest electronics, gadgets,
                             and technology at great prices.
                         </p>
-
-                        {/* Social Links */}
-                        <div className="mt-6 flex items-center gap-3">
-                            <a
-                                href="#"
-                                aria-label="Facebook"
-                                className="rounded-full border border-gray-200 px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-indigo-600 hover:bg-indigo-600 hover:text-white"
-                            >
-                                Facebook
-                            </a>
-
-                            <a
-                                href="#"
-                                aria-label="Instagram"
-                                className="rounded-full border border-gray-200 px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-indigo-600 hover:bg-indigo-600 hover:text-white"
-                            >
-                                Instagram
-                            </a>
-
-                            <a
-                                href="#"
-                                aria-label="YouTube"
-                                className="rounded-full border border-gray-200 px-3 py-2 text-sm font-medium text-gray-600 transition hover:border-indigo-600 hover:bg-indigo-600 hover:text-white"
-                            >
-                                YouTube
-                            </a>
-                        </div>
                     </div>
 
                     {/* Quick Links */}
@@ -81,19 +54,10 @@ const Footer = () => {
 
                             <li>
                                 <Link
-                                    to="/about"
+                                    to="/about-us"
                                     className="text-sm text-gray-600 transition hover:text-indigo-600"
                                 >
                                     About Us
-                                </Link>
-                            </li>
-
-                            <li>
-                                <Link
-                                    to="/contact"
-                                    className="text-sm text-gray-600 transition hover:text-indigo-600"
-                                >
-                                    Contact Us
                                 </Link>
                             </li>
                         </ul>
@@ -108,19 +72,10 @@ const Footer = () => {
                         <ul className="mt-4 space-y-3">
                             <li>
                                 <Link
-                                    to="/orders"
+                                    to="/profile/my-orders"
                                     className="text-sm text-gray-600 transition hover:text-indigo-600"
                                 >
                                     My Orders
-                                </Link>
-                            </li>
-
-                            <li>
-                                <Link
-                                    to="/wishlist"
-                                    className="text-sm text-gray-600 transition hover:text-indigo-600"
-                                >
-                                    Wishlist
                                 </Link>
                             </li>
 
@@ -135,7 +90,7 @@ const Footer = () => {
 
                             <li>
                                 <Link
-                                    to="/terms"
+                                    to="/terms-and-conditions"
                                     className="text-sm text-gray-600 transition hover:text-indigo-600"
                                 >
                                     Terms & Conditions

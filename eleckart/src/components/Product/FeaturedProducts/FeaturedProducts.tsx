@@ -1,9 +1,25 @@
-import React from 'react'
-import { Products } from "../../../data/products";
+import { useEffect, useState } from "react";
+import type { Product } from "../../../types/product";
+import { getProducts } from "../../../services/productService";
 import ProductCard from "../ProductCard/ProductCard";
 
 function FeaturedProducts() {
-    const featuredProducts = Products.filter(
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getProducts();
+                setProducts(data);
+            } catch (error) {
+                console.error("Failed to fetch products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    const featuredProducts = products.filter(
         (product) => (product.isFeatured)
     );
     
