@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Product } from "../../../types/product";
 import { getProducts } from "../../../services/productService";
 import ProductCard from "../ProductCard/ProductCard";
+import { Link } from "react-router-dom"
 
 function FeaturedProducts() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -37,12 +38,12 @@ function FeaturedProducts() {
                         </p>
                     </div>
 
-                    <button
+                    <Link to="/products"
                         type="button"
                         className="text-sm font-medium text-indigo-600 hover:text-indigo-700"
                     >
                         View All →
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Product Grid */}
