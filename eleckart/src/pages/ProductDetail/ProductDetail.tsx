@@ -7,7 +7,7 @@ import type { Product } from "../../types/product";
 import { getProducts } from "../../services/productService";
 
 const ProductDetail = () => {
-    const { category, productId } = useParams();
+    const { category, slug } = useParams();
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -39,7 +39,8 @@ const ProductDetail = () => {
         );
     }
 
-    const product = products.find((item) => item._id === productId);
+    const product = products.find((item) => item.slug === slug);
+
     if (!product) {
         return <div>Product not found</div>;
     }
@@ -70,6 +71,7 @@ const ProductDetail = () => {
     return (
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
             <Breadcrumb items={breadcrumbItems} />
+
             <div className="grid gap-10 lg:grid-cols-2">
 
                 <ProductGallery
@@ -77,7 +79,7 @@ const ProductDetail = () => {
                     productName={product.name}
                 />
 
-                <ProductInfo product={product}/>
+                <ProductInfo product={product} />
 
             </div>
         </div>
