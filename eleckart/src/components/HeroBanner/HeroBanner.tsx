@@ -1,5 +1,6 @@
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,6 +11,7 @@ export interface HeroSlide {
   desktopImage: string;
   mobileImage: string;
   alt: string;
+  categorySlug: string;
 }
 
 interface HeroBannerProps {
@@ -17,6 +19,7 @@ interface HeroBannerProps {
 }
 
 const HeroBanner = ({ slides }: HeroBannerProps) => {
+  console.log("Hero slides:", slides);
   return (
     <section className="w-full overflow-hidden">
       <Swiper
@@ -35,18 +38,20 @@ const HeroBanner = ({ slides }: HeroBannerProps) => {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <picture>
-              <source
-                media="(max-width: 767px)"
-                srcSet={slide.mobileImage}
-              />
+            <Link to={`/products?category=${slide.categorySlug}`}>
+              <picture>
+                <source
+                  media="(max-width: 767px)"
+                  srcSet={slide.mobileImage}
+                />
 
-              <img
-                src={slide.desktopImage}
-                alt={slide.alt}
-                className="block h-auto w-full"
-              />
-            </picture>
+                <img
+                  src={slide.desktopImage}
+                  alt={slide.alt}
+                  className="block h-auto w-full"
+                />
+              </picture>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -24,18 +24,21 @@ export default function Home() {
         desktopImage: heroBanner1,
         mobileImage: mobileHeroBanner1,
         alt: "elecKart smartphones offer",
+        categorySlug: "smartphones",
     },
     {
         id: 2,
         desktopImage: heroBanner2,
         mobileImage: mobileHeroBanner2,
         alt: "elecKart laptops offer",
+        categorySlug: "laptops",
     },
     {
         id: 3,
         desktopImage: heroBanner3,
         mobileImage: mobileHeroBanner3,
         alt: "elecKart smartwatches offer",
+        categorySlug: "smartwatches",
     },
     ];
     return (

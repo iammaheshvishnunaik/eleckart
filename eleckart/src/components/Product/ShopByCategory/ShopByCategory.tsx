@@ -10,7 +10,7 @@ function ShopByCategory() {
               {
                   categories.map((category) => (
                       <Link to={`/products?category=${category.slug}`} key={category.id} className='min-w-0'> 
-                      <img src={category.image} alt={category.name}></img> 
+                      <img src={category.image} alt={category.name} className="object-contain"></img> 
                       <h3 className='text-[18px] py-4'>{category.name}</h3> </Link>
                   ))
               }

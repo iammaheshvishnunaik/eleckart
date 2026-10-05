@@ -44,12 +44,14 @@ function ProductListing() {
       desktopImage: heroBanner1,
       mobileImage: mobileHeroBanner1,
       alt: "elecKart smartphones offer",
+    categorySlug: "smartphones",
     },
     {
       id: 2,
       desktopImage: heroBanner2,
       mobileImage: mobileHeroBanner2,
       alt: "elecKart laptops offer",
+      categorySlug: "laptops",
     },
   ];
 
@@ -284,7 +286,7 @@ function ProductListing() {
         <aside className="hidden w-64 shrink-0 lg:block">
           <FilterSidebar
             categories={[
-              "Mobiles",
+              "Smartphones",
               "Laptops",
               "Smartwatches",
             ]}

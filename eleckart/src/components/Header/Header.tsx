@@ -201,15 +201,15 @@ const Header = () => {
               All Products
             </Link>
 
-            {/* Mobiles */}
+            {/* Smartphones */}
             <Link
-              to="/products?category=mobiles"
-              className={`transition hover:text-indigo-600 ${isCategoryActive("mobiles")
+              to="/products?category=smartphones"
+              className={`transition hover:text-indigo-600 ${isCategoryActive("smartphones")
                 ? "font-semibold text-indigo-600"
                 : "text-gray-700"
                 }`}
             >
-              Mobiles
+              Smartphones
             </Link>
 
             {/* Laptops */}
@@ -268,16 +268,16 @@ const Header = () => {
               All Products
             </Link>
 
-            {/* Mobiles */}
+            {/* Smartphones */}
             <Link
-              to="/products?category=mobiles"
+              to="/products?category=smartphones"
               onClick={() => setMobileMenuOpen(false)}
-              className={`border-b border-gray-100 py-3 text-sm font-medium ${isCategoryActive("mobiles")
+              className={`border-b border-gray-100 py-3 text-sm font-medium ${isCategoryActive("smartphones")
                 ? "text-indigo-600"
                 : "text-gray-700"
                 }`}
             >
-              Mobiles
+              Smartphones
             </Link>
 
             {/* Laptops */}
