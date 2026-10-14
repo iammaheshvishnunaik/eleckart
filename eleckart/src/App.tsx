@@ -23,7 +23,7 @@ function App() {
     const verifyUser = async () => {
         try {
             const response = await fetch(
-                "http://localhost:5000/api/auth/me",
+                `${import.meta.env.VITE_API_URL}/api/auth/me`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

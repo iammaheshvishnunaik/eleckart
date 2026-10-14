@@ -69,7 +69,7 @@ const CheckoutSummary = () => {
         razorpayPaymentId?: string
     ) => {
         const response = await fetch(
-            "http://localhost:5000/api/orders",
+            `${import.meta.env.VITE_API_URL}/api/orders`,
             {
                 method: "POST",
 
@@ -157,7 +157,7 @@ const CheckoutSummary = () => {
 
             //Create Razorpay order
             const response = await fetch(
-                "http://localhost:5000/api/payment/create-order",
+                `${import.meta.env.VITE_API_URL}/api/payment/create-order`,
                 {
                     method: "POST",
 
@@ -202,7 +202,7 @@ const CheckoutSummary = () => {
                         //Send payment details to backend
                         const verifyResponse =
                             await fetch(
-                                "http://localhost:5000/api/payment/verify",
+                                `${import.meta.env.VITE_API_URL}/api/payment/verify`,
                                 {
                                     method: "POST",
 
