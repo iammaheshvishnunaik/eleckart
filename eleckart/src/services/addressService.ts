@@ -1,6 +1,7 @@
+
 import type { Address } from "../types/address";
 
-const API_URL = "http://localhost:5000/api/addresses";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/addresses`;
 
 export const getAddresses = async (
     token: string

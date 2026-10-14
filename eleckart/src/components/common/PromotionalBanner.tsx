@@ -1,5 +1,3 @@
-import React from "react";
-
 interface PromotionalBannerProps {
     desktopImage: string;
     mobileImage: string;

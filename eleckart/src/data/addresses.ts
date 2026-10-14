@@ -2,7 +2,7 @@ import type { Address } from "../types/address";
 
 export const addresses: Address[] = [
     {
-        id: "address-1",
+        _id: "address-1",
         fullName: "Mahesh Naik",
         mobile: "9876543210",
         address: "123, MG Road",
@@ -11,7 +11,7 @@ export const addresses: Address[] = [
         pincode: "560001",
     },
     {
-        id: "address-2",
+        _id: "address-2",
         fullName: "Mahesh Naik",
         mobile: "9876543210",
         address: "45, Main Road",
