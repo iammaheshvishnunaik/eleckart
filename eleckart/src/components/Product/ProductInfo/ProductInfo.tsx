@@ -126,28 +126,18 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row">
-
                 <button
                     type="button"
                     onClick={() => dispatch(addToCart(product))}
                     disabled={!product.inStock}
-                    className={`flex w-1/2
-                        ${isInCart ? "text-green-600 border-green-600 hover:bg-indigo-50" : "text-indigo-600 border-indigo-600 hover:bg-indigo-50"} 
-                        items-center justify-center rounded-md bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-300`}
+                    className={`flex w-full items-center justify-center whitespace-nowrap rounded-md bg-indigo-600 px-4 py-3 font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-300 sm:w-1/2 ${isInCart
+                            ? "border-green-600 text-green-600 hover:bg-indigo-50"
+                            : "border-indigo-600 text-indigo-600 hover:bg-indigo-50"
+                        }`}
                 >
-                    <ShoppingCart size={20} className="mr-2" />
+                    <ShoppingCart size={20} className="mr-2 shrink-0" />
                     {isInCart ? "✓ Added to Cart" : "Add to Cart"}
                 </button>
-
-                {/*<button
-                    type="button"
-                    disabled={!product.inStock}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-md bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-300"
-                >
-                    <Zap size={20} />
-                    Buy Now
-                </button>*/}
-
             </div>
 
         </div>

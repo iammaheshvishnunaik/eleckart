@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import { setSelectedAddress } from "../../store/checkoutSlice";
+import { clearSelectedAddress, setSelectedAddress } from "../../store/checkoutSlice";
 import type { Address } from "../../types/address";
 import { getAddresses } from "../../services/addressService";
 import { useNavigate } from "react-router-dom";
@@ -11,24 +11,11 @@ const DeliveryAddress = () => {
     const token = useSelector(
         (state: RootState) => state.auth.token
     );
+
     const [addresses, setAddresses] = useState<Address[]>([]);
-    useEffect(() => {
-        const fetchAddresses = async () => {
-            if (!token) {
-                return;
-            }
-
-            try {
-                const data = await getAddresses(token);
-                setAddresses(data);
-            } catch (error) {
-                console.error("Failed to fetch addresses:", error);
-            }
-        };
-
-        fetchAddresses();
-    }, [token]);
     const [showAddAddress, setShowAddAddress] = useState(false);
+    const [loading, setLoading] = useState(true);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -36,17 +23,78 @@ const DeliveryAddress = () => {
         (state: RootState) => state.checkout.selectedAddress
     );
 
+    useEffect(() => {
+        const fetchAddresses = async () => {
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const data = await getAddresses(token);
+                setAddresses(data);
+
+                // Clear the selected address if it is no longer saved.
+                if (
+                    selectedAddress &&
+                    !data.some(
+                        (address) => address._id === selectedAddress._id
+                    )
+                ) {
+                    dispatch(clearSelectedAddress());
+                }
+            } catch (error) {
+                console.error("Failed to fetch addresses:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAddresses();
+    }, [token]);
+
     const handleOnChange = (address: Address) => {
         dispatch(setSelectedAddress(address));
     };
 
     const handleContinue = () => {
-        if (!selectedAddress) {
+        const isSelectedAddressValid =
+            selectedAddress &&
+            addresses.some(
+                (address) => address._id === selectedAddress._id
+            );
+
+        if (addresses.length === 0 || !isSelectedAddressValid) {
             return;
         }
 
         navigate("/checkout/payment");
     };
+
+    const handleAddressSuccess = async () => {
+        setShowAddAddress(false);
+
+        if (!token) {
+            return;
+        }
+
+        try {
+            const data = await getAddresses(token);
+            setAddresses(data);
+
+            if (data.length > 0) {
+                dispatch(setSelectedAddress(data[data.length - 1]));
+            }
+        } catch (error) {
+            console.error("Failed to refresh addresses:", error);
+        }
+    };
+
+    const isSelectedAddressValid =
+        !!selectedAddress &&
+        addresses.some(
+            (address) => address._id === selectedAddress._id
+        );
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -64,53 +112,60 @@ const DeliveryAddress = () => {
                 </div>
 
                 {/* Address List */}
-                <div className="space-y-4">
-                    {addresses.map((address) => (
-                        <div
-                            key={address._id}
-                            className={`rounded-xl border bg-white p-6 shadow-sm ${selectedAddress?._id === address._id
-                                ? "border-indigo-600"
-                                : "border-gray-200"
+                {loading ? (
+                    <p className="py-6 text-center text-sm text-gray-500">
+                        Loading delivery addresses...
+                    </p>
+                ) : addresses.length === 0 ? (
+                    <div className="rounded-xl border border-gray-200 bg-white p-6 text-center">
+                        <p className="text-sm text-gray-600">
+                            No delivery address found. Please add an address to continue.
+                        </p>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {addresses.map((address) => (
+                            <div
+                                key={address._id}
+                                className={`rounded-xl border bg-white p-6 shadow-sm ${
+                                    selectedAddress?._id === address._id
+                                        ? "border-indigo-600"
+                                        : "border-gray-200"
                                 }`}
-                        >
-                            <label className="flex cursor-pointer items-start gap-4">
+                            >
+                                <label className="flex cursor-pointer items-start gap-4">
+                                    <input
+                                        type="radio"
+                                        name="address"
+                                        checked={
+                                            selectedAddress?._id === address._id
+                                        }
+                                        onChange={() => handleOnChange(address)}
+                                        className="mt-1 h-4 w-4 accent-indigo-600"
+                                    />
 
-                                <input
-                                    type="radio"
-                                    name="address"
-                                    checked={
-                                        selectedAddress?._id === address._id
-                                    }
-                                    onChange={() =>
-                                        handleOnChange(address)
-                                    }
-                                    className="mt-1 h-4 w-4 accent-indigo-600"
-                                />
+                                    <div>
+                                        <p className="font-semibold text-gray-900">
+                                            {address.fullName}
+                                        </p>
 
-                                <div>
-                                    <p className="font-semibold text-gray-900">
-                                        {address.fullName}
-                                    </p>
+                                        <p className="mt-1 text-sm text-gray-600">
+                                            {address.mobile}
+                                        </p>
 
-                                    <p className="mt-1 text-sm text-gray-600">
-                                        {address.mobile}
-                                    </p>
+                                        <p className="mt-2 text-sm text-gray-600">
+                                            {address.address}
+                                        </p>
 
-                                    <p className="mt-2 text-sm text-gray-600">
-                                        {address.address}
-                                    </p>
-
-                                    <p className="text-sm text-gray-600">
-                                        {address.city},{" "}
-                                        {address.state} -{" "}
-                                        {address.pincode}
-                                    </p>
-                                </div>
-
-                            </label>
-                        </div>
-                    ))}
-                </div>
+                                        <p className="text-sm text-gray-600">
+                                            {address.city}, {address.state} - {address.pincode}
+                                        </p>
+                                    </div>
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                )}
 
                 {/* Add New Address */}
                 <button
@@ -121,24 +176,11 @@ const DeliveryAddress = () => {
                     + Add New Address
                 </button>
 
+                {/* Add Address Form */}
                 {showAddAddress && (
                     <AddAddress
                         onCancel={() => setShowAddAddress(false)}
-                        onSuccess={async () => {
-                            setShowAddAddress(false);
-
-                            if (!token) {
-                                return;
-                            }
-
-                            const data = await getAddresses(token);
-
-                            setAddresses(data);
-
-                            if (data.length > 0) {
-                                dispatch(setSelectedAddress(data[0]));
-                            }
-                        }}
+                        onSuccess={handleAddressSuccess}
                     />
                 )}
 
@@ -147,7 +189,11 @@ const DeliveryAddress = () => {
                     <button
                         type="button"
                         onClick={handleContinue}
-                        disabled={!selectedAddress}
+                        disabled={
+                            loading ||
+                            addresses.length === 0 ||
+                            !isSelectedAddressValid
+                        }
                         className="rounded-lg bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-300"
                     >
                         Continue to Payment
