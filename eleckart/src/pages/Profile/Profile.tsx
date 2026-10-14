@@ -12,7 +12,7 @@ import AddAddress from "../../components/Profile/AddAddress/AddAddress";
 import Breadcrumb from "../../components/common/Breadcrumb";
 
 const Profile = () => {
-    const navigate = useNavigate();
+    /*const navigate = useNavigate();*/
 
     const user = useSelector(
         (state: RootState) => state.auth.user
