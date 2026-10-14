@@ -41,7 +41,9 @@ const AppRoutes = () => {
         <Route path="/order-placed" element={<OrderPlaced />} />
       </Route>
 
-      <Route path="/profile/my-orders" element={<MyOrders />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/profile/my-orders" element={<MyOrders />} />
+      </Route>
 
       <Route path="/login" element={<Login />} />
 
