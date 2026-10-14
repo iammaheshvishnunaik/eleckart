@@ -19,7 +19,6 @@ interface HeroBannerProps {
 }
 
 const HeroBanner = ({ slides }: HeroBannerProps) => {
-  console.log("Hero slides:", slides);
   return (
     <section className="w-full overflow-hidden">
       <Swiper
