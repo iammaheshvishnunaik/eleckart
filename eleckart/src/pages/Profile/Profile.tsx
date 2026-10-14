@@ -257,7 +257,7 @@ const Profile = () => {
 
                                             </div>
 
-                                            {/* Edit */}
+                                            {/* Edit 
                                             <button
                                                 type="button"
                                                 onClick={() =>
@@ -269,7 +269,7 @@ const Profile = () => {
                                             >
                                                 Edit
                                             </button>
-
+                                            */}
                                         </div>
 
                                     </div>

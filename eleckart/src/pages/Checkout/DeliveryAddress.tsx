@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import { clearSelectedAddress, setSelectedAddress } from "../../store/checkoutSlice";
+import {
+    clearSelectedAddress,
+    setSelectedAddress,
+} from "../../store/checkoutSlice";
 import type { Address } from "../../types/address";
 import { getAddresses } from "../../services/addressService";
 import { useNavigate } from "react-router-dom";
@@ -184,8 +187,16 @@ const DeliveryAddress = () => {
                     />
                 )}
 
-                {/* Continue */}
-                <div className="mt-6 flex justify-end">
+                {/* Back and Continue Buttons */}
+                <div className="mt-6 flex justify-between">
+                    <button
+                        type="button"
+                        onClick={() => navigate("/cart")}
+                        className="rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+                    >
+                        Back to Cart
+                    </button>
+
                     <button
                         type="button"
                         onClick={handleContinue}
