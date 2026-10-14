@@ -4,7 +4,7 @@ const router = express.Router();
 const {
     createRazorpayOrder,
     verifyPayment,
-} = require("../controllers/PaymentController");
+} = require("../controllers/paymentController");
 
 // Create Razorpay order
 router.post("/create-order", createRazorpayOrder);
