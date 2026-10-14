@@ -1,13 +1,17 @@
+
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://localhost:27017/elecKart");
+        if (!process.env.MONGODB_URI) {
+            throw new Error("MONGODB_URI environment variable is missing");
+        }
 
-        console.log("MongoDB connected successfully");
+        await mongoose.connect(process.env.MONGODB_URI);
+
+        console.log("MongoDB Atlas connected successfully");
     } catch (error) {
         console.error("MongoDB connection failed:", error.message);
-
         process.exit(1);
     }
 };
