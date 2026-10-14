@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MapPin, Plus, User, History } from "lucide-react";
 
 import type { RootState } from "../../store/store";
