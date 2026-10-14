@@ -37,7 +37,7 @@ const ProductGallery = ({
   };
 
   return (
-    <div className="w-full">
+    <div className="min-w-0 w-full max-w-full">
 
       {/* Main Image */}
       <div

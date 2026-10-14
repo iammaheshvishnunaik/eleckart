@@ -72,15 +72,17 @@ const ProductDetail = () => {
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
             <Breadcrumb items={breadcrumbItems} />
 
-            <div className="grid gap-10 lg:grid-cols-2">
+            <div className="grid min-w-0 grid-cols-1 gap-10 lg:grid-cols-2">
+                <div className="min-w-0 w-full">
+                    <ProductGallery
+                        images={product.images}
+                        productName={product.name}
+                    />
+                </div>
 
-                <ProductGallery
-                    images={product.images}
-                    productName={product.name}
-                />
-
-                <ProductInfo product={product} />
-
+                <div className="min-w-0 w-full">
+                    <ProductInfo product={product} />
+                </div>
             </div>
         </div>
     );

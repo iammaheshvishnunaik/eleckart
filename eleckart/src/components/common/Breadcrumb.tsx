@@ -17,7 +17,7 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
           const isLast = index === items.length - 1;
 
           return (
-            <li key={item.label} className="flex items-center gap-2">
+            <li key={item.label} className="flex items-center gap-2 whitespace-nowrap">
               {index > 0 && (
                 <span className="text-gray-400">/</span>
               )}
